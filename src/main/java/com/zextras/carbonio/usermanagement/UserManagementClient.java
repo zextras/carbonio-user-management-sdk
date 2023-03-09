@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -127,7 +128,9 @@ public class UserManagementClient {
   ) {
     CloseableHttpClient httpClient = HttpClients.createMinimal();
 
-    HttpGet request = new HttpGet(userManagementURL + getUsersEndpoint + usersUUID);
+    AtomicReference<String> getRequest = new AtomicReference<>(userManagementURL + getUsersEndpoint + "?userIds=");
+    usersUUID.forEach(userUUID -> getRequest.updateAndGet(v -> v + userUUID));
+    HttpGet request = new HttpGet(getRequest.get());
     request.setHeader("Cookie", cookie);
 
     try {
