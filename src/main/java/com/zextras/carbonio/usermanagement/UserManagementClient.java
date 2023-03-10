@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -128,9 +129,8 @@ public class UserManagementClient {
   ) {
     CloseableHttpClient httpClient = HttpClients.createMinimal();
 
-    AtomicReference<String> getRequest = new AtomicReference<>(userManagementURL + getUsersEndpoint + "?userIds=");
-    usersUUID.forEach(userUUID -> getRequest.updateAndGet(v -> v + userUUID));
-    HttpGet request = new HttpGet(getRequest.get());
+    HttpGet request = new HttpGet(userManagementURL + getUsersEndpoint + "?" + usersUUID.stream()
+      .map(id -> String.join("=", "userIds", id.toString())).collect(Collectors.joining("&")));
     request.setHeader("Cookie", cookie);
 
     try {
