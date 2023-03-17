@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
+﻿// SPDX-FileCopyrightText: 2022 Zextras <https://www.zextras.com>
 //
 // SPDX-License-Identifier: AGPL-3.0-only
 
@@ -14,6 +14,7 @@ import com.zextras.carbonio.usermanagement.exceptions.UserNotFound;
 import io.vavr.control.Try;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
@@ -144,6 +145,8 @@ public class UserManagementClient {
 
         return Try.success(new ObjectMapper().readValue(bodyResponse, new TypeReference<>() {}));
       }
+
+      return Try.success(Collections.emptyList());
     } catch (IOException exception) {
       return Try.failure(new InternalServerError(exception));
     }
