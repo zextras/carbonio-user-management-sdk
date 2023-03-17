@@ -144,10 +144,6 @@ public class UserManagementClient {
 
         return Try.success(new ObjectMapper().readValue(bodyResponse, new TypeReference<>() {}));
       }
-
-      return Try.failure(
-        new UserNotFound("The cookie: \"" + cookie + "\" is not valid")
-      );
     } catch (IOException exception) {
       return Try.failure(new InternalServerError(exception));
     }
