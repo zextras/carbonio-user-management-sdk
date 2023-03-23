@@ -32,9 +32,7 @@ pipeline {
         }
         stage('Publish version') {
             when {
-                anyOf {
-                   branch 'develop'
-                }
+                buildingTag()
             }
             steps {
                 sh 'mvn -B --settings settings-jenkins.xml deploy'
