@@ -26,7 +26,7 @@ Official SDK for Zextras Carbonio User Management service
 <dependency>
     <groupId>com.zextras.carbonio.user-management</groupId>
     <artifactId>carbonio-user-management-sdk</artifactId>
-    <version>0.1.2</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
