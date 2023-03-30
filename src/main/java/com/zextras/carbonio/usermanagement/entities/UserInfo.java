@@ -6,7 +6,7 @@ package com.zextras.carbonio.usermanagement.entities;
 
 public class UserInfo {
 
-  private String id;
+  private UserId id;
   private String email;
   private String fullName;
   private String domain;
@@ -14,7 +14,7 @@ public class UserInfo {
   public UserInfo() {}
 
   public UserInfo(
-    String id,
+    UserId id,
     String email,
     String fullName,
     String domain
@@ -25,11 +25,11 @@ public class UserInfo {
     this.domain = domain;
   }
 
-  public String getId() {
+  public UserId getId() {
     return id;
   }
 
-  public void setId(String id) {
+  public void setId(UserId id) {
     this.id = id;
   }
 

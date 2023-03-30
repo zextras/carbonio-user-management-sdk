@@ -117,7 +117,7 @@ public class UserManagementClient {
    *
    * @param cookie    is a {@link String} representing the requester cookie. (It is necessary to
    *                  have only the ZM_AUTH_TOKEN cookie).
-   * @param usersUUID is a {@link List} of {@link UUID}s of the Carbonio users to retrieve.
+   * @param userIds is a {@link List} of {@link String}s of the Carbonio users to retrieve.
    * @return a {@link Try#success} containing a {@link List} of {@link UserInfo} representing
    * the related Carbonio users if they exist. <p />It returns a {@link Try#failure} containing
    * an {@link UserNotFound} throwable the cookie is not valid. <p />It returns a
@@ -126,11 +126,11 @@ public class UserManagementClient {
    */
   public Try<List<UserInfo>> getUsers(
     String cookie,
-    List<UUID> usersUUID
+    List<String> userIds
   ) {
     CloseableHttpClient httpClient = HttpClients.createMinimal();
 
-    HttpGet request = new HttpGet(userManagementURL + getUsersEndpoint + "?" + usersUUID.stream()
+    HttpGet request = new HttpGet(userManagementURL + getUsersEndpoint + "?" + userIds.stream()
       .map(id -> String.join("=", "userIds", id.toString())).collect(Collectors.joining("&")));
     request.setHeader("Cookie", cookie);
 
@@ -157,7 +157,7 @@ public class UserManagementClient {
    *
    * @param cookie is a {@link String} representing the requester cookie. (It is necessary to have
    * only the ZM_AUTH_TOKEN cookie).
-   * @param userUUID is a {@link UUID} of the Carbonio user to retrieve.
+   * @param userId is a {@link String} of the Carbonio user to retrieve.
    *
    * @return a {@link Try#success} containing an {@link UserInfo} representing the related Carbonio
    * user if the user exists. <p />It returns a {@link Try#failure} containing an {@link
@@ -165,13 +165,13 @@ public class UserManagementClient {
    * a {@link Try#failure} containing an {@link InternalServerError} throwable if something goes
    * wrong during the API call.
    */
-  public Try<UserInfo> getUserByUUID(
+  public Try<UserInfo> getUserById(
     String cookie,
-    UUID userUUID
+    String userId
   ) {
     CloseableHttpClient httpClient = HttpClients.createMinimal();
 
-    HttpGet request = new HttpGet(userManagementURL + getUsersByIdEndpoint + userUUID);
+    HttpGet request = new HttpGet(userManagementURL + getUsersByIdEndpoint + userId);
     request.setHeader("Cookie", cookie);
 
     try {
@@ -187,7 +187,7 @@ public class UserManagementClient {
       }
 
       return Try.failure(
-        new UserNotFound("The user with uuid: \"" + userUUID + "\" was not found")
+        new UserNotFound("The user with uuid: \"" + userId + "\" was not found")
       );
     } catch (IOException exception) {
       return Try.failure(new InternalServerError(exception));
