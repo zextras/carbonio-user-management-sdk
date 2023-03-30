@@ -78,6 +78,6 @@ SPDX-License-Identifier: AGPL-3.0-only
     <vavr.version>0.10.4</vavr.version>
   </properties>
 
-  <version>0.2.0-2</version>
+  <version>0.2.1</version>
 
 </project>
