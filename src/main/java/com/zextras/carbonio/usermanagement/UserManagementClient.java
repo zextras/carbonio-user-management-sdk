@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zextras.carbonio.usermanagement.entities.UserId;
 import com.zextras.carbonio.usermanagement.entities.UserInfo;
+import com.zextras.carbonio.usermanagement.entities.UserMyself;
 import com.zextras.carbonio.usermanagement.exceptions.InternalServerError;
 import com.zextras.carbonio.usermanagement.exceptions.UnAuthorized;
 import com.zextras.carbonio.usermanagement.exceptions.UserNotFound;
@@ -36,6 +37,7 @@ public class UserManagementClient {
   private final String getUsersEndpoint        = "/users/";
   private final String getUsersByIdEndpoint    = "/users/id/";
   private final String getUsersByEmailEndpoint = "/users/email/";
+  private final String getUsersMyselfEndpoint  = "/users/myself/";
   private final String healthEndpoint          = "/health/";
   private final String userManagementURL;
 
@@ -233,6 +235,42 @@ public class UserManagementClient {
       );
     } catch (IOException exception) {
       return Try.failure(new InternalServerError(exception));
+    }
+  }
+
+  /**
+   * Allows to retrieve a specific Carbonio user by its cookies.
+   *
+   * @param cookie is a {@link String} representing the requester cookie. (It is necessary to have
+   * only the ZM_AUTH_TOKEN cookie).
+   *
+   * @return a {@link Try#success} containing an {@link UserMyself} representing the related
+   * Carbonio user if the user exists. <p />It returns a {@link Try#failure} containing an {@link
+   * UserNotFound} throwable if the user does not exist or the cookie is not valid. <p />It returns
+   * a {@link Try#failure} containing an {@link InternalServerError} throwable if something goes
+   * wrong during the API call.
+   */
+  public Try<UserMyself> getUserMyself(String cookie) {
+    try(CloseableHttpClient httpClient = HttpClients.createMinimal()) {
+
+      HttpGet request = new HttpGet(userManagementURL + getUsersMyselfEndpoint);
+      request.setHeader("Cookie", cookie);
+
+      CloseableHttpResponse response = httpClient.execute(request);
+
+      if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+        String bodyResponse = IOUtils.toString(
+          response.getEntity().getContent(),
+          StandardCharsets.UTF_8
+        );
+
+        return Try.success(new ObjectMapper().readValue(bodyResponse, UserMyself.class));
+      }
+
+      return Try.failure(new UserNotFound(String.format("User not found: cookie %s", cookie)));
+
+    } catch (IOException exception) {
+      return Try.failure(exception);
     }
   }
 
