@@ -4,6 +4,8 @@
 
 package com.zextras.carbonio.usermanagement.entities;
 
+import java.util.Locale;
+
 /**
  * Contains all the information (for now only a subset of them) of a Carbonio user.
  */
