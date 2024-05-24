@@ -13,6 +13,9 @@ pipeline {
         LC_ALL="C.UTF-8"
         jenkins_build="true"
     }
+    parameters {
+        booleanParam defaultValue: false, description: 'Whether to upload the SNAPSHOT artifact', name: 'SNAPSHOT'
+    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '25'))
         timeout(time: 2, unit: 'HOURS')
@@ -33,16 +36,34 @@ pipeline {
                 }
             }
             steps {
-                def projectVersion = "mvn help:evaluate -Dexpression=project.version -q -DforceStdout"
-                if (!projectVersion.contains('-SNAPSHOT')) {
-                   currentBuild.result = 'ABORTED'
-                   error('The current version of the project is not a SNAPSHOT')
+                script {
+                    def projectVersion = sh (
+                        script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                        returnStdout: true
+                    ).trim()
+
+                    if (!projectVersion.contains("-SNAPSHOT")) {
+                        currentBuild.result = 'ABORTED'
+                        error('The current version of the project is not a SNAPSHOT ${projectVersion}')
+                    }
                 }
             }
         }
         stage('Build') {
             steps {
                 sh 'mvn -B --settings settings-jenkins.xml package'
+            }
+        }
+        stage('Publish SNAPSHOT') {
+            when {
+                allOf {
+                    expression { params.SNAPSHOT == true }
+                    expression { env.BRANCH_NAME != "release" }
+                    expression { env.BRANCH_NAME.contains("PR") }
+                }
+            }
+            steps {
+                sh 'mvn -B --settings settings-jenkins.xml deploy'
             }
         }
         stage('Publish version') {
