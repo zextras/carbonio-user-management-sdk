@@ -4,10 +4,7 @@
 
 package com.zextras.carbonio.usermanagement.enumerations;
 
-public enum Status {
-  ACTIVE,
-  MAINTENANCE,
-  LOCKED,
-  CLOSED,
-  LOCKOUT
+public enum UserType {
+  INTERNAL,
+  GUEST
 }

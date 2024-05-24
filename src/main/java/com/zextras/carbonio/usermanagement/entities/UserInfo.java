@@ -5,6 +5,7 @@
 package com.zextras.carbonio.usermanagement.entities;
 
 import com.zextras.carbonio.usermanagement.enumerations.Status;
+import com.zextras.carbonio.usermanagement.enumerations.UserType;
 
 public class UserInfo {
 
@@ -13,15 +14,18 @@ public class UserInfo {
   private String fullName;
   private String domain;
   private Status status;
+  private UserType userType;
 
   public UserInfo() {}
 
-  public UserInfo(UserId id, String email, String fullName, String domain, Status status) {
+  public UserInfo(
+      UserId id, String email, String fullName, String domain, Status status, UserType userType) {
     this.id = id;
     this.email = email;
     this.fullName = fullName;
     this.domain = domain;
     this.status = status;
+    this.userType = userType;
   }
 
   public UserId getId() {
@@ -62,5 +66,13 @@ public class UserInfo {
 
   public void setStatus(Status status) {
     this.status = status;
+  }
+
+  public UserType getUserType() {
+    return userType;
+  }
+
+  public void setUserType(UserType userType) {
+    this.userType = userType;
   }
 }

@@ -4,11 +4,11 @@
 
 package com.zextras.carbonio.usermanagement.entities;
 
+import com.zextras.carbonio.usermanagement.enumerations.UserType;
+
 import java.util.Locale;
 
-/**
- * Contains all the information (for now only a subset of them) of a Carbonio user.
- */
+/** Contains all the information (for now only a subset of them) of a Carbonio user. */
 public class UserMyself {
 
   private UserId id;
@@ -16,21 +16,18 @@ public class UserMyself {
   private String fullName;
   private String domain;
   private Locale locale;
+  private UserType userType;
 
   public UserMyself() {}
 
   public UserMyself(
-    UserId id,
-    String email,
-    String fullName,
-    String domain,
-    Locale locale
-  ) {
+      UserId id, String email, String fullName, String domain, Locale locale, UserType userType) {
     this.id = id;
     this.email = email;
     this.fullName = fullName;
     this.domain = domain;
     this.locale = locale;
+    this.userType = userType;
   }
 
   public UserId getId() {
@@ -67,5 +64,13 @@ public class UserMyself {
 
   public Locale getLocale() {
     return locale;
+  }
+
+  public UserType getUserType() {
+    return userType;
+  }
+
+  public void setUserType(UserType userType) {
+    this.userType = userType;
   }
 }
