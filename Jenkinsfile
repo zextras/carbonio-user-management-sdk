@@ -31,6 +31,7 @@ pipeline {
                     expression { env.BRANCH_NAME != "release" }
                     expression { env.BRANCH_NAME.contains("PR") }
                 }
+            }
             steps {
                 def projectVersion = "mvn help:evaluate -Dexpression=project.version -q -DforceStdout"
                 if (!projectVersion.contains('-SNAPSHOT')) {
