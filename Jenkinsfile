@@ -9,9 +9,12 @@ pipeline {
         }
     }
     environment {
-        JAVA_OPTS="-Dfile.encoding=UTF8"
-        LC_ALL="C.UTF-8"
-        jenkins_build="true"
+        JAVA_OPTS='-Dfile.encoding=UTF8'
+        LC_ALL='C.UTF-8'
+        jenkins_build='true'
+    }
+    parameters {
+        booleanParam defaultValue: false, description: 'Whether to upload the SNAPSHOT artifact', name: 'SNAPSHOT'
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '25'))
@@ -21,13 +24,46 @@ pipeline {
         stage('Setup') {
             steps {
                 withCredentials([file(credentialsId: 'jenkins-maven-settings.xml', variable: 'SETTINGS_PATH')]) {
-                    sh "cp ${SETTINGS_PATH} settings-jenkins.xml"
+                    sh 'cp ${SETTINGS_PATH} settings-jenkins.xml'
+                }
+            }
+        }
+        stage('Check SNAPSHOT version') {
+            when {
+                allOf {
+                    expression { env.BRANCH_NAME != 'release' }
+                    expression { env.BRANCH_NAME.contains('PR') }
+                }
+            }
+            steps {
+                script {
+                    def projectVersion = sh (
+                        script: 'mvn help:evaluate -Dexpression=project.version -q -DforceStdout',
+                        returnStdout: true
+                    ).trim()
+
+                    if (!projectVersion.contains('-SNAPSHOT')) {
+                        currentBuild.result = 'ABORTED'
+                        error('The current version of the project is not a SNAPSHOT')
+                    }
                 }
             }
         }
         stage('Build') {
             steps {
                 sh 'mvn -B --settings settings-jenkins.xml package'
+            }
+        }
+        stage('Publish SNAPSHOT') {
+            when {
+                allOf {
+                    expression { params.SNAPSHOT == true }
+                    expression { env.BRANCH_NAME != 'release' }
+                    expression { env.BRANCH_NAME.contains('PR') }
+                }
+            }
+            steps {
+                sh 'mvn -B --settings settings-jenkins.xml deploy'
             }
         }
         stage('Publish version') {
