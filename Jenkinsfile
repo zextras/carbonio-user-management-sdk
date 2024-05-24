@@ -9,9 +9,9 @@ pipeline {
         }
     }
     environment {
-        JAVA_OPTS="-Dfile.encoding=UTF8"
-        LC_ALL="C.UTF-8"
-        jenkins_build="true"
+        JAVA_OPTS='-Dfile.encoding=UTF8'
+        LC_ALL='C.UTF-8'
+        jenkins_build='true'
     }
     parameters {
         booleanParam defaultValue: false, description: 'Whether to upload the SNAPSHOT artifact', name: 'SNAPSHOT'
@@ -24,15 +24,15 @@ pipeline {
         stage('Setup') {
             steps {
                 withCredentials([file(credentialsId: 'jenkins-maven-settings.xml', variable: 'SETTINGS_PATH')]) {
-                    sh "cp ${SETTINGS_PATH} settings-jenkins.xml"
+                    sh 'cp ${SETTINGS_PATH} settings-jenkins.xml'
                 }
             }
         }
         stage('Check SNAPSHOT version') {
             when {
                 allOf {
-                    expression { env.BRANCH_NAME != "release" }
-                    expression { env.BRANCH_NAME.contains("PR") }
+                    expression { env.BRANCH_NAME != 'release' }
+                    expression { env.BRANCH_NAME.contains('PR') }
                 }
             }
             steps {
@@ -42,7 +42,7 @@ pipeline {
                         returnStdout: true
                     ).trim()
 
-                    if (!projectVersion.contains("-SNAPSHOT")) {
+                    if (!projectVersion.contains('-SNAPSHOT')) {
                         currentBuild.result = 'ABORTED'
                         error('The current version of the project is not a SNAPSHOT')
                     }
@@ -58,8 +58,8 @@ pipeline {
             when {
                 allOf {
                     expression { params.SNAPSHOT == true }
-                    expression { env.BRANCH_NAME != "release" }
-                    expression { env.BRANCH_NAME.contains("PR") }
+                    expression { env.BRANCH_NAME != 'release' }
+                    expression { env.BRANCH_NAME.contains('PR') }
                 }
             }
             steps {
