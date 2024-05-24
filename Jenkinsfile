@@ -44,7 +44,7 @@ pipeline {
 
                     if (!projectVersion.contains("-SNAPSHOT")) {
                         currentBuild.result = 'ABORTED'
-                        error('The current version of the project is not a SNAPSHOT ${projectVersion}')
+                        error('The current version of the project is not a SNAPSHOT')
                     }
                 }
             }
