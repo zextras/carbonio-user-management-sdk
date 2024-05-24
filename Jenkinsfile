@@ -25,6 +25,19 @@ pipeline {
                 }
             }
         }
+        stage('Check SNAPSHOT version') {
+            when {
+                allOf {
+                    expression { env.BRANCH_NAME != "release" }
+                    expression { env.BRANCH_NAME.contains("PR") }
+                }
+            steps {
+              def projectVersion = "mvn help:evaluate -Dexpression=project.version -q -DforceStdout"
+              if (!projectVersion.contains('-SNAPSHOT')) {
+                 currentBuild.result = 'ABORTED'
+                 error('The current version of the project is not a SNAPSHOT')
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -B --settings settings-jenkins.xml package'
