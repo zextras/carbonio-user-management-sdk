@@ -4,7 +4,7 @@
 
 package com.zextras.carbonio.usermanagement.enumerations;
 
-public enum Status {
+public enum UserStatus {
   ACTIVE,
   MAINTENANCE,
   LOCKED,
