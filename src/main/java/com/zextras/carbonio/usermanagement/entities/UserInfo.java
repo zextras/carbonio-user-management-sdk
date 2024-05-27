@@ -60,19 +60,19 @@ public class UserInfo {
     this.domain = domain;
   }
 
-  public UserStatus getUserStatus() {
+  public UserStatus getStatus() {
     return userStatus;
   }
 
-  public void setUserStatus(UserStatus userStatus) {
+  public void setStatus(UserStatus userStatus) {
     this.userStatus = userStatus;
   }
 
-  public UserType getUserType() {
+  public UserType getType() {
     return userType;
   }
 
-  public void setUserType(UserType userType) {
+  public void setType(UserType userType) {
     this.userType = userType;
   }
 }
