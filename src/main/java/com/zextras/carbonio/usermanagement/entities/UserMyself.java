@@ -4,7 +4,6 @@
 
 package com.zextras.carbonio.usermanagement.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zextras.carbonio.usermanagement.enumerations.UserType;
 
 import java.util.Locale;
@@ -17,19 +16,18 @@ public class UserMyself {
   private String fullName;
   private String domain;
   private Locale locale;
-  @JsonProperty("userType")
   private UserType type;
 
   public UserMyself() {}
 
   public UserMyself(
-      UserId id, String email, String fullName, String domain, Locale locale, UserType userType) {
+      UserId id, String email, String fullName, String domain, Locale locale, UserType type) {
     this.id = id;
     this.email = email;
     this.fullName = fullName;
     this.domain = domain;
     this.locale = locale;
-    this.type = userType;
+    this.type = type;
   }
 
   public UserId getId() {
@@ -72,7 +70,7 @@ public class UserMyself {
     return type;
   }
 
-  public void setType(UserType userType) {
-    this.type = userType;
+  public void setType(UserType type) {
+    this.type = type;
   }
 }

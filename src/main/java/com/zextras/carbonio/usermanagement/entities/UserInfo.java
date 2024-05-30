@@ -4,7 +4,6 @@
 
 package com.zextras.carbonio.usermanagement.entities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.zextras.carbonio.usermanagement.enumerations.UserStatus;
 import com.zextras.carbonio.usermanagement.enumerations.UserType;
 
@@ -14,21 +13,19 @@ public class UserInfo {
   private String email;
   private String fullName;
   private String domain;
-  @JsonProperty("userStatus")
   private UserStatus status;
-  @JsonProperty("userType")
   private UserType type;
 
   public UserInfo() {}
 
   public UserInfo(
-      UserId id, String email, String fullName, String domain, UserStatus userStatus, UserType userType) {
+      UserId id, String email, String fullName, String domain, UserStatus status, UserType type) {
     this.id = id;
     this.email = email;
     this.fullName = fullName;
     this.domain = domain;
-    this.status = userStatus;
-    this.type = userType;
+    this.status = status;
+    this.type = type;
   }
 
   public UserId getId() {
@@ -67,15 +64,15 @@ public class UserInfo {
     return status;
   }
 
-  public void setStatus(UserStatus userStatus) {
-    this.status = userStatus;
+  public void setStatus(UserStatus status) {
+    this.status = status;
   }
 
   public UserType getType() {
     return type;
   }
 
-  public void setType(UserType userType) {
-    this.type = userType;
+  public void setType(UserType type) {
+    this.type = type;
   }
 }
