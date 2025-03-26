@@ -250,10 +250,10 @@ public class UserManagementClient {
    * a {@link Try#failure} containing an {@link InternalServerError} throwable if something goes
    * wrong during the API call.
    */
-  public Try<UserMyself> getUserMyself(String cookie) {
+  public Try<UserMyself> getUserMyself(String cookie, boolean ignoreCache) {
     try(CloseableHttpClient httpClient = HttpClients.createMinimal()) {
 
-      HttpGet request = new HttpGet(userManagementURL + getUsersMyselfEndpoint);
+      HttpGet request = new HttpGet(userManagementURL + getUsersMyselfEndpoint + "?ignoreCache=" + ignoreCache);
       request.setHeader("Cookie", cookie);
 
       CloseableHttpResponse response = httpClient.execute(request);
@@ -272,6 +272,11 @@ public class UserManagementClient {
     } catch (IOException exception) {
       return Try.failure(exception);
     }
+  }
+
+  // default for backward compatibility
+  public Try<UserMyself> getUserMyself(String cookie) {
+    return getUserMyself(cookie, false);
   }
 
   /**
