@@ -128,12 +128,13 @@ public class UserManagementClient {
    */
   public Try<List<UserInfo>> getUsers(
     String cookie,
-    List<String> userIds
+    List<String> userIds,
+    boolean ignoreCache
   ) {
     CloseableHttpClient httpClient = HttpClients.createMinimal();
 
     HttpGet request = new HttpGet(userManagementURL + getUsersEndpoint + "?" + userIds.stream()
-      .map(id -> String.join("=", "userIds", id.toString())).collect(Collectors.joining("&")));
+      .map(id -> String.join("=", "userIds", id.toString())).collect(Collectors.joining("&")) + "&ignoreCache=" + ignoreCache);
     request.setHeader("Cookie", cookie);
 
     try {
@@ -154,6 +155,13 @@ public class UserManagementClient {
     }
   }
 
+  // default for backward compatibility
+  public Try<List<UserInfo>> getUsers(
+    String cookie,
+    List<String> userIds){
+    return getUsers(cookie, userIds, false);
+  }
+
   /**
    * Allows to retrieve a specific Carbonio user by {@link UUID} if it exists.
    *
@@ -169,11 +177,12 @@ public class UserManagementClient {
    */
   public Try<UserInfo> getUserById(
     String cookie,
-    String userId
+    String userId,
+    boolean ignoreCache
   ) {
     CloseableHttpClient httpClient = HttpClients.createMinimal();
 
-    HttpGet request = new HttpGet(userManagementURL + getUsersByIdEndpoint + userId);
+    HttpGet request = new HttpGet(userManagementURL + getUsersByIdEndpoint + userId + "?ignoreCache=" + ignoreCache);
     request.setHeader("Cookie", cookie);
 
     try {
@@ -196,6 +205,13 @@ public class UserManagementClient {
     }
   }
 
+  // default for backward compatibility
+  public Try<UserInfo> getUserById(
+    String cookie,
+    String userId){
+    return getUserById(cookie, userId, false);
+  }
+
   /**
    * Allows to retrieve a specific Carbonio user by email if it exists.
    *
@@ -211,11 +227,12 @@ public class UserManagementClient {
    */
   public Try<UserInfo> getUserByEmail(
     String cookie,
-    String userEmail
+    String userEmail,
+    boolean ignoreCache
   ) {
     CloseableHttpClient httpClient = HttpClients.createMinimal();
 
-    HttpGet request = new HttpGet(userManagementURL + getUsersByEmailEndpoint + userEmail);
+    HttpGet request = new HttpGet(userManagementURL + getUsersByEmailEndpoint + userEmail + "?ignoreCache=" + ignoreCache);
     request.setHeader("Cookie", cookie);
 
     try {
@@ -236,6 +253,13 @@ public class UserManagementClient {
     } catch (IOException exception) {
       return Try.failure(new InternalServerError(exception));
     }
+  }
+
+  // default for backward compatibility
+  public Try<UserInfo> getUserByEmail(
+    String cookie,
+    String userEmail){
+    return getUserByEmail(cookie, userEmail, false);
   }
 
   /**
