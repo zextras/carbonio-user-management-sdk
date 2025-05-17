@@ -5,7 +5,7 @@
 pipeline {
     agent {
         node {
-            label 'openjdk11-agent-v1'
+            label 'zextras-v1'
         }
     }
     environment {
@@ -24,13 +24,15 @@ pipeline {
         stage('Setup') {
             steps {
                 withCredentials([file(credentialsId: 'jenkins-maven-settings.xml', variable: 'SETTINGS_PATH')]) {
-                    sh 'cp ${SETTINGS_PATH} settings-jenkins.xml'
+                    sh 'cp $SETTINGS_PATH settings-jenkins.xml'
                 }
             }
         }
         stage('Build') {
             steps {
-                sh 'mvn -B --settings settings-jenkins.xml package'
+                container('jdk-17') {
+                    sh 'mvn -B --settings settings-jenkins.xml package'
+                }
             }
         }
         stage('Publish SNAPSHOT') {
@@ -41,7 +43,9 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn -B --settings settings-jenkins.xml deploy'
+                container('jdk-17') {
+                    sh 'mvn -B --settings settings-jenkins.xml deploy'
+                }
             }
         }
         stage('Publish version') {
@@ -49,7 +53,9 @@ pipeline {
                 buildingTag()
             }
             steps {
-                sh 'mvn -B --settings settings-jenkins.xml deploy'
+                container('jdk-17') {
+                    sh 'mvn -B --settings settings-jenkins.xml deploy'
+                }
             }
         }
     }
