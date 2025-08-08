@@ -68,14 +68,15 @@ SPDX-License-Identifier: AGPL-3.0-only
   <packaging>jar</packaging>
 
   <properties>
-    <apache-common.version>2.11.0</apache-common.version>
-    <apache-httpclient.version>4.5.13</apache-httpclient.version>
-    <guice.version>5.0.1</guice.version>
-    <jackson.version>2.13.1</jackson.version>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    <maven.version.ignore>(?i).*-(alpha|beta|m|rc)([-.]?\d+)?</maven.version.ignore>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <vavr.version>0.10.4</vavr.version>
+    <apache-common.version>2.20.0</apache-common.version>
+    <apache-httpclient.version>4.5.14</apache-httpclient.version>
+    <guice.version>7.0.0</guice.version>
+    <jackson.version>2.19.2</jackson.version>
+    <vavr.version>0.10.7</vavr.version>
   </properties>
 
   <version>0.5.5</version>
