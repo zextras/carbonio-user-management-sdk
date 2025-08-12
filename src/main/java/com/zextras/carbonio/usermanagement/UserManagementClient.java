@@ -35,12 +35,13 @@ import org.apache.http.impl.client.HttpClients;
  */
 public class UserManagementClient {
 
-    private final String validateTokenEndpoint = "/auth/token/";
-    private final String getUsersEndpoint = "/users/";
-    private final String getUsersByIdEndpoint = "/users/id/";
-    private final String getUsersByEmailEndpoint = "/users/email/";
-    private final String getUsersMyselfEndpoint = "/users/myself/";
-    private final String healthEndpoint = "/health/";
+    private static final String validateTokenEndpoint = "/auth/token/";
+    private static final String getUsersEndpoint = "/users/";
+    private static final String getUsersByIdEndpoint = "/users/id/";
+    private static final String getUsersByEmailEndpoint = "/users/email/";
+    private static final String getUsersMyselfEndpoint = "/users/myself/";
+    private static final String healthEndpoint = "/health/";
+    
     private final String userManagementURL;
 
     UserManagementClient(String userManagementURL) {
