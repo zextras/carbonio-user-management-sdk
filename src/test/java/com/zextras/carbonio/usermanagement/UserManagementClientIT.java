@@ -4,8 +4,10 @@
 
 package com.zextras.carbonio.usermanagement;
 
+import com.zextras.carbonio.usermanagement.support.DockerComposeExtension;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.testcontainers.containers.ComposeContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -15,6 +17,7 @@ import java.io.File;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 //@Testcontainers
+@ExtendWith(DockerComposeExtension.class)
 public class UserManagementClientIT {
 
 //  @Container

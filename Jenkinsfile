@@ -44,11 +44,6 @@ pipeline {
         }
         stage("ITs") {
             steps {
-                container('dind') {
-                    withDockerRegistry(credentialsId: 'private-registry', url: 'https://registry.dev.zextras.com') {
-                        sh 'docker compose up -d'
-                    }
-                }
                 container('jdk-17') {
                     sh 'mvn -B --settings settings-jenkins.xml verify -P run-integration-tests'
                 }
