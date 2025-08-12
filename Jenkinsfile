@@ -44,8 +44,12 @@ pipeline {
         }
         stage("ITs") {
             steps {
-                container('jdk-17') {
-                    sh 'mvn -B --settings settings-jenkins.xml verify -P run-integration-tests'
+                container('dind') {
+                    withDockerRegistry(credentialsId: 'private-registry', url: 'https://registry.dev.zextras.com') {
+                        container('jdk-17') {
+                            sh 'mvn -B --settings settings-jenkins.xml verify -P run-integration-tests'
+                        }
+                    }
                 }
             }
         }
