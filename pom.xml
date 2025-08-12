@@ -75,12 +75,6 @@ SPDX-License-Identifier: AGPL-3.0-only
       <version>${testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>com.github.tomakehurst</groupId>
-      <artifactId>wiremock-jre8</artifactId>
-      <version>${wiremock.version}</version>
-      <scope>test</scope>
-    </dependency>
 
   </dependencies>
   <distributionManagement>
@@ -109,7 +103,6 @@ SPDX-License-Identifier: AGPL-3.0-only
     <vavr.version>0.10.7</vavr.version>
     <junit-jupiter.version>5.12.1</junit-jupiter.version>
     <testcontainers.version>1.21.3</testcontainers.version>
-    <wiremock.version>2.35.1</wiremock.version>
   </properties>
 
   <version>0.5.5</version>
