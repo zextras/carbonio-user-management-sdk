@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(DockerComposeExtension.class)
@@ -23,7 +24,26 @@ public class UserManagementClientIT {
   }
 
   @Test
-  void healthCheck_true() {
+  void healthCheck() {
     assertTrue(client.healthCheck());
   }
+
+  @Test
+  void validateUserTokenWithInvalidCarbonioToken() {
+    var result = client.validateUserToken("invalid-token");
+    assertFalse(result.isSuccess());
+  }
+
+  @Test
+  void getUserMyselfWithInvalidCookie() {
+    var result = client.getUserMyself("invalid-cookie");
+    assertFalse(result.isSuccess());
+  }
+
+  @Test
+  void getUserByEmailWithInvalidCookie() {
+    var result = client.getUserByEmail("invalid-cookie", "user@carbonio.localhost");
+    assertFalse(result.isSuccess());
+  }
+
 }
