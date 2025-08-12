@@ -35,7 +35,14 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage("UTs") {
+            steps {
+                container('jdk-17') {
+                    sh 'mvn -B --settings settings-jenkins.xml verify -P run-unit-tests'
+                }
+            }
+        }
+        stage("ITs") {
             steps {
                 container('dind') {
                     withDockerRegistry(credentialsId: 'private-registry', url: 'https://registry.dev.zextras.com') {
@@ -43,7 +50,15 @@ pipeline {
                     }
                 }
                 container('jdk-17') {
-                    sh 'mvn -B --settings settings-jenkins.xml install'
+                    sh 'mvn -B --settings settings-jenkins.xml verify -P run-integration-tests'
+                }
+            }
+        }
+        stage('Coverage') {
+            steps {
+                container('jdk-17') {
+                    sh 'mvn -B --settings settings-jenkins.xml verify -P generate-jacoco-full-report'
+                    recordCoverage(tools: [[parser: 'JACOCO']],sourceCodeRetention: 'MODIFIED')
                 }
             }
         }
