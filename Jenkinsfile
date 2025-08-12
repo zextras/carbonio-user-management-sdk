@@ -35,6 +35,15 @@ pipeline {
                 }
             }
         }
+        stage('Test') {
+            steps {
+                container('jdk-17') {
+                    sh 'docker compose up -d'
+                    sh 'sleep 60'
+                    sh 'mvn -B --settings settings-jenkins.xml install'
+                }
+            }
+        }
         stage('Publish SNAPSHOT') {
             when {
                 allOf {
