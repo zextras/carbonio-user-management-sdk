@@ -7,25 +7,30 @@ SPDX-License-Identifier: AGPL-3.0-only
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
   <artifactId>carbonio-user-management-sdk</artifactId>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.13.0</version>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.5</version>
-        <configuration>
-          <useModulePath>false</useModulePath>
-        </configuration>
-      </plugin>
-    </plugins>
-    <sourceDirectory>src/main/java</sourceDirectory>
-  </build>
+  <groupId>com.zextras.carbonio.user-management</groupId>
+  <version>0.5.5</version>
+  <packaging>jar</packaging>
+
+  <name>carbonio-user-management-sdk</name>
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.version.ignore>(?i).*-(alpha|beta|m|rc)([-.]?\d+)?</maven.version.ignore>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <apache-common.version>2.20.0</apache-common.version>
+    <apache-httpclient.version>4.5.14</apache-httpclient.version>
+    <guice.version>7.0.0</guice.version>
+    <jackson.version>2.19.2</jackson.version>
+    <vavr.version>0.10.7</vavr.version>
+    <junit-jupiter.version>5.12.1</junit-jupiter.version>
+    <testcontainers.version>1.21.3</testcontainers.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <artifactId>guice</artifactId>
@@ -77,6 +82,26 @@ SPDX-License-Identifier: AGPL-3.0-only
     </dependency>
 
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+        <configuration>
+          <useModulePath>false</useModulePath>
+        </configuration>
+      </plugin>
+    </plugins>
+    <sourceDirectory>src/main/java</sourceDirectory>
+  </build>
+
   <distributionManagement>
     <repository>
       <id>artifactory</id>
@@ -84,27 +109,5 @@ SPDX-License-Identifier: AGPL-3.0-only
       <url>https://zextras.jfrog.io/artifactory/public-maven-repo</url>
     </repository>
   </distributionManagement>
-  <groupId>com.zextras.carbonio.user-management</groupId>
-  <modelVersion>4.0.0</modelVersion>
-
-  <name>carbonio-user-management-sdk</name>
-
-  <packaging>jar</packaging>
-
-  <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
-    <maven.version.ignore>(?i).*-(alpha|beta|m|rc)([-.]?\d+)?</maven.version.ignore>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <apache-common.version>2.20.0</apache-common.version>
-    <apache-httpclient.version>4.5.14</apache-httpclient.version>
-    <guice.version>7.0.0</guice.version>
-    <jackson.version>2.19.2</jackson.version>
-    <vavr.version>0.10.7</vavr.version>
-    <junit-jupiter.version>5.12.1</junit-jupiter.version>
-    <testcontainers.version>1.21.3</testcontainers.version>
-  </properties>
-
-  <version>0.5.5</version>
 
 </project>
