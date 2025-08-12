@@ -12,7 +12,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
   <artifactId>carbonio-user-management-sdk</artifactId>
   <groupId>com.zextras.carbonio.user-management</groupId>
-  <version>0.5.6-SNAPSHOT</version>
+  <version>${revision}${changelist}</version>
   <packaging>jar</packaging>
 
   <name>carbonio-user-management-sdk</name>
@@ -22,6 +22,10 @@ SPDX-License-Identifier: AGPL-3.0-only
     <maven.compiler.target>17</maven.compiler.target>
     <maven.version.ignore>(?i).*-(alpha|beta|m|rc)([-.]?\d+)?</maven.version.ignore>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <!-- Maven CI Friendly -->
+    <revision>0.5.6</revision>
+    <changelist>-SNAPSHOT</changelist>
 
     <!-- Dependencies -->
     <apache-common.version>2.20.0</apache-common.version>

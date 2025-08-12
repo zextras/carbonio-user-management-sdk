@@ -70,7 +70,7 @@ pipeline {
             }
             steps {
                 container('jdk-17') {
-                    sh 'mvn -B --settings settings-jenkins.xml deploy'
+                    sh 'mvn -B --settings settings-jenkins.xml -Dchangelist= deploy'
                 }
             }
         }
