@@ -14,7 +14,7 @@ public class DockerComposeExtension implements BeforeAllCallback, AfterAllCallba
 
     @Override
     public void beforeAll(final ExtensionContext context) throws Exception {
-        environment = new ComposeContainer(new File("docker-compose.yaml"));
+        environment = new ComposeContainer(new File("docker/minimal/docker-compose.yaml"));
         environment.start();
         TimeUnit.SECONDS.sleep(30);
     }
