@@ -41,7 +41,7 @@ public class UserManagementClient {
     private static final String getUsersByEmailEndpoint = "/users/email/";
     private static final String getUsersMyselfEndpoint = "/users/myself/";
     private static final String healthEndpoint = "/health/";
-    
+
     private final String userManagementURL;
 
     UserManagementClient(String userManagementURL) {
@@ -92,11 +92,10 @@ public class UserManagementClient {
      */
     public Try<UserId> validateUserToken(String carbonioUserToken) {
 
-        CloseableHttpClient httpClient = HttpClients.createMinimal();
+        try (CloseableHttpClient httpClient = HttpClients.createMinimal()) {
 
-        HttpGet request = new HttpGet(userManagementURL + validateTokenEndpoint + carbonioUserToken);
+            HttpGet request = new HttpGet(userManagementURL + validateTokenEndpoint + carbonioUserToken);
 
-        try {
             CloseableHttpResponse response = httpClient.execute(request);
 
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
@@ -131,13 +130,12 @@ public class UserManagementClient {
             List<String> userIds,
             boolean ignoreCache
     ) {
-        CloseableHttpClient httpClient = HttpClients.createMinimal();
+        try (CloseableHttpClient httpClient = HttpClients.createMinimal()) {
 
-        HttpGet request = new HttpGet(userManagementURL + getUsersEndpoint + "?" + userIds.stream()
-                .map(id -> String.join("=", "userIds", id.toString())).collect(Collectors.joining("&")) + "&ignoreCache=" + ignoreCache);
-        request.setHeader("Cookie", cookie);
+            HttpGet request = new HttpGet(userManagementURL + getUsersEndpoint + "?" + userIds.stream()
+                    .map(id -> String.join("=", "userIds", id.toString())).collect(Collectors.joining("&")) + "&ignoreCache=" + ignoreCache);
+            request.setHeader("Cookie", cookie);
 
-        try {
             CloseableHttpResponse response = httpClient.execute(request);
 
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
