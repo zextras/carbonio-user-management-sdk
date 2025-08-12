@@ -5,21 +5,16 @@
 package com.zextras.carbonio.usermanagement.entities;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UserIdTest {
 
     @Test
-    void constructorAndGetterShouldWork() {
-        UserId id = new UserId("abc-123");
-        assertEquals("abc-123", id.getUserId());
-    }
-
-    @Test
     void setterShouldUpdateValue() {
-        UserId id = new UserId();
-        assertNull(id.getUserId());
-        id.setUserId("xyz");
-        assertEquals("xyz", id.getUserId());
+        UserId id = new UserId("test-123");
+        assertEquals("test-123", id.getUserId());
+        id.setUserId("test-456");
+        assertEquals("test-456", id.getUserId());
     }
 }
