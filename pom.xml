@@ -24,8 +24,7 @@ SPDX-License-Identifier: AGPL-3.0-only
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Maven CI Friendly -->
-    <revision>0.5.7</revision>
-    <changelist>-SNAPSHOT</changelist>
+    <revision>0.5.8</revision>
 
     <!-- Dependencies -->
     <apache-common.version>2.20.0</apache-common.version>
@@ -263,6 +262,21 @@ SPDX-License-Identifier: AGPL-3.0-only
         <skip.jacoco.full.report.generation>false</skip.jacoco.full.report.generation>
         <skip.unit.tests>true</skip.unit.tests>
         <skip.integration.tests>true</skip.integration.tests>
+      </properties>
+    </profile>
+     <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <changelist>-SNAPSHOT</changelist>
+      </properties>
+    </profile>
+    <profile>
+      <id>prod</id>
+      <properties>
+        <changelist></changelist>
       </properties>
     </profile>
   </profiles>
