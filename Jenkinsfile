@@ -60,7 +60,7 @@ pipeline {
         }
         stage('Publish SNAPSHOT') {
             when {
-              expression { env.BRANCH_NAME != 'develop' }
+              expression { env.BRANCH_NAME != 'devel' }
             }
             steps {
                 container('jdk-17') {
