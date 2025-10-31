@@ -23,6 +23,8 @@ public class UserMyself {
   private Locale locale;
   private Map<String, String> carbonioAttributes;
 
+  public UserMyself(){ }
+
   public UserMyself(
       UserId id, String email, String fullName, String domain, UserStatus status, Locale locale, UserType type, Map<String, String> carbonioAttributes) {
     this.id = id;
