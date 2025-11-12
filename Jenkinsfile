@@ -42,6 +42,16 @@ pipeline {
             defaultValue: false,
             description: 'Check this to prepare a new release (creates pre-release branch and PR)'
         )
+        booleanParam(
+            name: 'SKIP_TESTS',
+            defaultValue: false,
+            description: 'Skip unit tests and integration tests'
+        )
+        booleanParam(
+            name: 'SKIP_CHECKS',
+            defaultValue: false,
+            description: 'Skip coverage and SonarQube analysis'
+        )
     }
     stages {
         stage('Checkout') {
@@ -66,6 +76,9 @@ pipeline {
             }
         }
         stage("UTs") {
+            when {
+                expression { params.SKIP_TESTS == false }
+            }
             steps {
                 container('jdk-17') {
                     sh 'mvn -B --settings settings-jenkins.xml verify -P run-unit-tests'
@@ -73,6 +86,9 @@ pipeline {
             }
         }
         stage("ITs") {
+            when {
+                expression { params.SKIP_TESTS == false }
+            }
             steps {
                 container('dind') {
                     withDockerRegistry(credentialsId: 'private-registry', url: 'https://registry.dev.zextras.com') {
@@ -84,6 +100,9 @@ pipeline {
             }
         }
         stage('Coverage') {
+            when {
+                expression { params.SKIP_CHECKS == false }
+            }
             steps {
                 container('jdk-17') {
                     sh 'mvn -B --settings settings-jenkins.xml verify -P generate-jacoco-full-report'
