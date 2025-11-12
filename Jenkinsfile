@@ -2,6 +2,24 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-only
 
+library(
+    identifier: 'jenkins-dt3-lib@v1.2.0',
+    retriever: modernSCM([
+        $class: 'GitSCMSource',
+        remote: 'git@github.com:zextras/jenkins-dt3-lib.git',
+        credentialsId: 'jenkins-integration-with-github-account'
+    ])
+)
+
+library(
+    identifier: 'jenkins-packages-build-library@1.0.4',
+    retriever: modernSCM([
+        $class: 'GitSCMSource',
+        remote: 'git@github.com:zextras/jenkins-packages-build-library.git',
+        credentialsId: 'jenkins-integration-with-github-account'
+    ])
+)
+
 pipeline {
     agent {
         node {
@@ -9,15 +27,30 @@ pipeline {
         }
     }
     environment {
-        JAVA_OPTS='-Dfile.encoding=UTF8'
-        LC_ALL='C.UTF-8'
-        jenkins_build='true'
+        JAVA_OPTS = '-Dfile.encoding=UTF8'
+        LC_ALL = 'C.UTF-8'
+        jenkins_build = 'true'
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '25'))
+        skipDefaultCheckout()
         timeout(time: 2, unit: 'HOURS')
     }
+    parameters {
+        booleanParam(
+            name: 'PREPARE_RELEASE',
+            defaultValue: false,
+            description: 'Check this to prepare a new release (creates pre-release branch and PR)'
+        )
+    }
     stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    checkoutWithMetadata()
+                }
+            }
+        }
         stage('Setup') {
             steps {
                 withCredentials([file(credentialsId: 'jenkins-maven-settings.xml', variable: 'SETTINGS_PATH')]) {
@@ -54,7 +87,51 @@ pipeline {
             steps {
                 container('jdk-17') {
                     sh 'mvn -B --settings settings-jenkins.xml verify -P generate-jacoco-full-report'
-                    recordCoverage(tools: [[parser: 'JACOCO']],sourceCodeRetention: 'MODIFIED')
+                    recordCoverage(tools: [[parser: 'JACOCO']], sourceCodeRetention: 'MODIFIED')
+                }
+            }
+        }
+        stage('Prepare Release') {
+            agent {
+                node {
+                    label 'nodejs-v1'
+                }
+            }
+            when {
+                allOf {
+                    branch 'devel'
+                    expression { params.PREPARE_RELEASE == true }
+                    not {
+                        expression {
+                            return env.GIT_COMMIT_MSG.contains('[skip ci]') ||
+                                   env.GIT_COMMIT_MSG.contains('chore(release):')
+                        }
+                    }
+                }
+            }
+            steps {
+                script {
+                    container('nodejs-20') {
+                        prepareRelease(
+                            repoName: 'carbonio-user-management-sdk'
+                        )
+                    }
+                }
+            }
+        }
+        stage('Tag for release') {
+            when {
+                allOf {
+                    branch 'devel'
+                    expression {
+                        return env.GIT_COMMIT_MSG.contains('chore(release):') &&
+                               env.GIT_COMMIT_MSG.contains('[skip ci]')
+                    }
+                }
+            }
+            steps {
+                script {
+                    tagRelease()
                 }
             }
         }
