@@ -1,10 +1,19 @@
+## [1.0.0](https://github.com/zextras/carbonio-user-management-sdk/compare/v0.5.9...v1.0.0) (2025-11-13)
+
+### ⚠ BREAKING CHANGES
+
+* automated releases (#25)
+
+### Miscellaneous Chores
+
+* automated releases ([#25](https://github.com/zextras/carbonio-user-management-sdk/issues/25)) ([e6a90cd](https://github.com/zextras/carbonio-user-management-sdk/commit/e6a90cde8e6b557be015bbaf34df6fa1ef3c5a83))
+
 ## [0.5.9](https://github.com/zextras/carbonio-user-management-sdk/compare/v0.5.7...v0.5.9) (2025-11-03)
 
 ### Features
 
 * handle carbonio attributes on user myself ([#24](https://github.com/zextras/carbonio-user-management-sdk/issues/24)) ([58edd82](https://github.com/zextras/carbonio-user-management-sdk/commit/58edd8267d32a754176ee1253d8c3b2f7b593bf9))
 ## [0.5.7](https://github.com/zextras/carbonio-user-management-sdk/compare/v5.5.6...v0.5.7) (2025-10-10)
-## [5.5.6](https://github.com/zextras/carbonio-user-management-sdk/compare/v0.5.5...v5.5.6) (2025-08-12)
 ## [0.5.5](https://github.com/zextras/carbonio-user-management-sdk/compare/v0.5.4...v0.5.5) (2025-03-31)
 
 ### Features
