@@ -14,7 +14,6 @@
 
 * handle carbonio attributes on user myself ([#24](https://github.com/zextras/carbonio-user-management-sdk/issues/24)) ([58edd82](https://github.com/zextras/carbonio-user-management-sdk/commit/58edd8267d32a754176ee1253d8c3b2f7b593bf9))
 ## [0.5.7](https://github.com/zextras/carbonio-user-management-sdk/compare/v5.5.6...v0.5.7) (2025-10-10)
-## [5.5.6](https://github.com/zextras/carbonio-user-management-sdk/compare/v0.5.5...v5.5.6) (2025-08-12)
 ## [0.5.5](https://github.com/zextras/carbonio-user-management-sdk/compare/v0.5.4...v0.5.5) (2025-03-31)
 
 ### Features
