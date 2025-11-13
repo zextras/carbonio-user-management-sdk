@@ -24,7 +24,7 @@ SPDX-License-Identifier: AGPL-3.0-only
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <!-- Maven CI Friendly -->
-    <revision>0.5.9</revision>
+    <revision>1.0.0</revision>
 
     <!-- Dependencies -->
     <apache-common.version>2.20.0</apache-common.version>
