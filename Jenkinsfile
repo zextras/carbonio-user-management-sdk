@@ -12,11 +12,11 @@ library(
 )
 
 library(
-    identifier: 'jenkins-packages-build-library@1.0.4',
+    identifier: 'jenkins-lib-common@1.1.2',
     retriever: modernSCM([
         $class: 'GitSCMSource',
-        remote: 'git@github.com:zextras/jenkins-packages-build-library.git',
-        credentialsId: 'jenkins-integration-with-github-account'
+        credentialsId: 'jenkins-integration-with-github-account',
+        remote: 'git@github.com:zextras/jenkins-lib-common.git'
     ])
 )
 
@@ -54,10 +54,12 @@ pipeline {
         )
     }
     stages {
-        stage('Checkout') {
+        stage('Setup') {
             steps {
+                checkout scm
                 script {
-                    checkoutWithMetadata()
+                    gitMetadata()
+                    properties(defaultPipelineProperties())
                 }
             }
         }
