@@ -70,7 +70,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                container('jdk-17') {
+                container('jdk-21') {
                     sh 'mvn -B --settings settings-jenkins.xml package'
                 }
             }
@@ -80,7 +80,7 @@ pipeline {
                 expression { params.SKIP_TESTS == false }
             }
             steps {
-                container('jdk-17') {
+                container('jdk-21') {
                     sh 'mvn -B --settings settings-jenkins.xml verify -P run-unit-tests'
                 }
             }
@@ -92,7 +92,7 @@ pipeline {
             steps {
                 container('dind') {
                     withDockerRegistry(credentialsId: 'private-registry', url: 'https://registry.dev.zextras.com') {
-                        container('jdk-17') {
+                        container('jdk-21') {
                             sh 'mvn -B --settings settings-jenkins.xml verify -P run-integration-tests'
                         }
                     }
@@ -104,7 +104,7 @@ pipeline {
                 expression { params.SKIP_CHECKS == false }
             }
             steps {
-                container('jdk-17') {
+                container('jdk-21') {
                     sh 'mvn -B --settings settings-jenkins.xml verify -P generate-jacoco-full-report'
                     recordCoverage(tools: [[parser: 'JACOCO']], sourceCodeRetention: 'MODIFIED')
                 }
@@ -161,7 +161,7 @@ pipeline {
                     if (env.TAG_NAME) {
                         profile = '-P prod'
                     }
-                    container('jdk-17') {
+                    container('jdk-21') {
                         sh "mvn -B --settings settings-jenkins.xml ${profile} deploy"
                     }
                 }
