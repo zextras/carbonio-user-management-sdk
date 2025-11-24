@@ -33,7 +33,10 @@ SPDX-License-Identifier: AGPL-3.0-only
     <jackson.version>2.19.2</jackson.version>
     <vavr.version>0.10.7</vavr.version>
     <junit-jupiter.version>5.12.1</junit-jupiter.version>
-    <testcontainers.version>1.21.3</testcontainers.version>
+    <slf4j.api.version>2.0.17</slf4j.api.version>
+    <logback.classic.version>1.5.21</logback.classic.version>
+    <testcontainers.version>2.0.2</testcontainers.version>
+    <testcontainers.jupiter.version>1.21.3</testcontainers.jupiter.version>
 
     <!-- Plugins -->
     <maven-compiler.version>3.13.0</maven-compiler.version>
@@ -78,18 +81,32 @@ SPDX-License-Identifier: AGPL-3.0-only
       <version>${vavr.version}</version>
     </dependency>
 
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <version>${slf4j.api.version}</version>
+      </dependency>
+
+      <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+          <version>${logback.classic.version}</version>
+      </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>${junit-jupiter.version}</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>${testcontainers.version}</version>
+      <version>${testcontainers.jupiter.version}</version>
       <scope>test</scope>
     </dependency>
+
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
