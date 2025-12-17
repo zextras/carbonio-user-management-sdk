@@ -1,6 +1,6 @@
 services:
   mailbox:
-    image: registry.dev.zextras.com/dev/carbonio-mailbox:latest
+    image: registry.dev.zextras.com/dev/carbonio-mailbox:devel
     hostname: docker.carbonio.localhost
     restart: on-failure
     networks:
@@ -37,7 +37,7 @@ services:
     restart: "no"
 
   openldap:
-    image: registry.dev.zextras.com/dev/carbonio-openldap:latest
+    image: registry.dev.zextras.com/dev/carbonio-openldap:devel
     restart: on-failure
     networks:
       - carbonio-user-management-network
@@ -51,7 +51,7 @@ services:
       timeout: 10s
 
   mariadb:
-    image: registry.dev.zextras.com/dev/carbonio-mariadb:latest
+    image: registry.dev.zextras.com/dev/carbonio-mariadb:devel
     networks:
       - carbonio-user-management-network
     ports:
@@ -74,7 +74,7 @@ services:
         condition: service_healthy
 
   user-management:
-    image: registry.dev.zextras.com/dev/carbonio-user-management:latest
+    image: registry.dev.zextras.com/dev/carbonio-user-management:devel
     restart: on-failure
     networks:
       - carbonio-user-management-network
