@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/zextras/carbonio-user-management-sdk/compare/v1.0.0...v1.0.1) (2026-02-04)
+
+### Bug Fixes
+
+* **test:** use containerized Docker Compose for CI compatibility ([#40](https://github.com/zextras/carbonio-user-management-sdk/issues/40)) ([2ab90f3](https://github.com/zextras/carbonio-user-management-sdk/commit/2ab90f361294063924e8e7500af0e6258ef942d2))
+
 ## [1.0.0](https://github.com/zextras/carbonio-user-management-sdk/compare/v0.5.9...v1.0.0) (2025-11-13)
 
 ### ⚠ BREAKING CHANGES
