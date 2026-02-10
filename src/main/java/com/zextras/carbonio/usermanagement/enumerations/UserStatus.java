@@ -9,5 +9,6 @@ public enum UserStatus {
   MAINTENANCE,
   LOCKED,
   CLOSED,
-  LOCKOUT
+  LOCKOUT,
+  PENDING
 }
