@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/zextras/carbonio-user-management-sdk/compare/v1.0.1...v1.0.2) (2026-02-10)
+
+### Bug Fixes
+
+* handle pending status ([#42](https://github.com/zextras/carbonio-user-management-sdk/issues/42)) ([14c9d14](https://github.com/zextras/carbonio-user-management-sdk/commit/14c9d147389452ae9c9eb0ba6d6fd91a838c0beb))
+
 ## [1.0.1](https://github.com/zextras/carbonio-user-management-sdk/compare/v1.0.0...v1.0.1) (2026-02-04)
 
 ### Bug Fixes
