@@ -300,26 +300,23 @@ public class UserManagementClient {
     }
 
     public Try<Account> getAccountById(String accountId) {
-        try (CloseableHttpClient httpClient = HttpClients.createMinimal()) {
+        return Try.of(() -> {
+            try (CloseableHttpClient httpClient = HttpClients.createMinimal()) {
+                HttpGet request = new HttpGet(userManagementURL + getAccountEndpoint + accountId);
 
-            HttpGet request = new HttpGet(userManagementURL + getAccountEndpoint + accountId);
+                CloseableHttpResponse response = httpClient.execute(request);
 
-            CloseableHttpResponse response = httpClient.execute(request);
+                if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                    String bodyResponse = IOUtils.toString(
+                        response.getEntity().getContent(),
+                        StandardCharsets.UTF_8
+                    );
 
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                String bodyResponse = IOUtils.toString(
-                    response.getEntity().getContent(),
-                    StandardCharsets.UTF_8
-                );
-
-                return Try.success(new ObjectMapper().readValue(bodyResponse, Account.class));
+                    return new ObjectMapper().readValue(bodyResponse, Account.class);
+                }
+                throw new UserNotFound(String.format("User not found: accountId %s", accountId));
             }
-
-            return Try.failure(new UserNotFound(String.format("User not found: accountId %s", accountId)));
-
-        } catch (IOException exception) {
-            return Try.failure(exception);
-        }
+        });
     }
 
     /**
