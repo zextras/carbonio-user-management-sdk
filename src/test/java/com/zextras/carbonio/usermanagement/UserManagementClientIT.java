@@ -46,4 +46,10 @@ public class UserManagementClientIT {
     assertFalse(result.isSuccess());
   }
 
+  @Test
+  void getAccountById() {
+    var result = client.getAccountById("testId");
+    assertFalse(result.isSuccess());
+  }
+
 }

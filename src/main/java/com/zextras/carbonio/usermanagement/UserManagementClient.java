@@ -6,6 +6,7 @@ package com.zextras.carbonio.usermanagement;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zextras.carbonio.usermanagement.entities.Account;
 import com.zextras.carbonio.usermanagement.entities.UserId;
 import com.zextras.carbonio.usermanagement.entities.UserInfo;
 import com.zextras.carbonio.usermanagement.entities.UserMyself;
@@ -40,6 +41,7 @@ public class UserManagementClient {
     private static final String getUsersByIdEndpoint = "/users/id/";
     private static final String getUsersByEmailEndpoint = "/users/email/";
     private static final String getUsersMyselfEndpoint = "/users/myself/";
+    private static final String getAccountEndpoint = "/account/";
     private static final String healthEndpoint = "/health/";
 
     private final String userManagementURL;
@@ -295,6 +297,29 @@ public class UserManagementClient {
     // default for backward compatibility
     public Try<UserMyself> getUserMyself(String cookie) {
         return getUserMyself(cookie, false);
+    }
+
+    public Try<Account> getAccountById(String accountId) {
+        try (CloseableHttpClient httpClient = HttpClients.createMinimal()) {
+
+            HttpGet request = new HttpGet(userManagementURL + getAccountEndpoint + accountId);
+
+            CloseableHttpResponse response = httpClient.execute(request);
+
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                String bodyResponse = IOUtils.toString(
+                    response.getEntity().getContent(),
+                    StandardCharsets.UTF_8
+                );
+
+                return Try.success(new ObjectMapper().readValue(bodyResponse, Account.class));
+            }
+
+            return Try.failure(new UserNotFound(String.format("User not found: accountId %s", accountId)));
+
+        } catch (IOException exception) {
+            return Try.failure(exception);
+        }
     }
 
     /**
