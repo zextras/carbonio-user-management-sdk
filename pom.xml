@@ -34,7 +34,7 @@ SPDX-License-Identifier: AGPL-3.0-only
     <vavr.version>0.10.7</vavr.version>
     <junit-jupiter.version>5.12.1</junit-jupiter.version>
     <slf4j.api.version>2.0.17</slf4j.api.version>
-    <logback.classic.version>1.5.21</logback.classic.version>
+    <logback.classic.version>1.5.32</logback.classic.version>
     <testcontainers.version>2.0.2</testcontainers.version>
     <testcontainers.jupiter.version>1.21.3</testcontainers.jupiter.version>
 
