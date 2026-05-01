@@ -27,7 +27,7 @@ SPDX-License-Identifier: AGPL-3.0-only
     <revision>1.0.2</revision>
 
     <!-- Dependencies -->
-    <apache-common.version>2.20.0</apache-common.version>
+    <apache-common.version>2.22.0</apache-common.version>
     <apache-httpclient.version>4.5.14</apache-httpclient.version>
     <guice.version>7.0.0</guice.version>
     <jackson.version>2.19.2</jackson.version>
