@@ -35,8 +35,8 @@ SPDX-License-Identifier: AGPL-3.0-only
     <junit-jupiter.version>5.12.1</junit-jupiter.version>
     <slf4j.api.version>2.0.17</slf4j.api.version>
     <logback.classic.version>1.5.21</logback.classic.version>
-    <testcontainers.version>2.0.2</testcontainers.version>
-    <testcontainers.jupiter.version>1.21.3</testcontainers.jupiter.version>
+    <testcontainers.version>2.0.5</testcontainers.version>
+    <testcontainers.jupiter.version>1.21.4</testcontainers.jupiter.version>
 
     <!-- Plugins -->
     <maven-compiler.version>3.13.0</maven-compiler.version>
